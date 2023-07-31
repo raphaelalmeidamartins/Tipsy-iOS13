@@ -21,14 +21,14 @@ class CalculatorViewController: UIViewController {
     
     var tipPercent: Double = 0.1
     
-    var tipValue: Double = 0.0
+    var billValue: Double = 0.0
     
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.tipChanged(self.tenPctButton)
     }
-
+    
     @IBAction func tipChanged(_ sender: UIButton) {
         [self.zeroPctButton, self.tenPctButton, self.twentyPctButton].forEach { (button) in
             button?.isSelected = false
@@ -46,7 +46,9 @@ class CalculatorViewController: UIViewController {
     }
 
     @IBAction func calculatePressed(_ sender: UIButton) {
-        let billValue = self.billTextField.text == "" || self.billTextField.text == nil ? "0.0" : self.billTextField.text
-        self.tipValue = Double(billValue!) ?? 0.0 / self.tipPercent
+        self.billTextField.endEditing(true)
+        var totalValue = Double(self.billTextField.text!) ?? 0.0
+        totalValue += totalValue * self.tipPercent
+        self.billValue = totalValue / Double(self.splitNumberLabel.text!)!
     }
 }
